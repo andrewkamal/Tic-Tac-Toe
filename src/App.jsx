@@ -21,7 +21,16 @@ function derivedActivePlayer(gameTurns) {
   return currentPlayer;
 }
 
-function deriveWinner(gameBoard, players) {
+function App() {
+  const [gameTurn, setGameTurn] = useState([]);
+  const [players, setPlayers] = useState({
+    X: "Player 1",
+    O: "Player 2",
+  });
+
+  const activePlayer = derivedActivePlayer(gameTurn);
+
+  let gameBoard = [...initialBoard.map((array) => [...array])];
   let winner;
 
   for (const turn of gameTurn) {
@@ -44,22 +53,8 @@ function deriveWinner(gameBoard, players) {
       winner = players[firstSqrSmbl];
     }
   }
-  return winner;
-}
-
-function App() {
-  const [gameTurn, setGameTurn] = useState([]);
-  const [players, setPlayers] = useState({
-    X: "Player 1",
-    O: "Player 2",
-  });
-
-  const activePlayer = derivedActivePlayer(gameTurn);
-
-  let gameBoard = [...initialBoard.map((array) => [...array])];
 
   const hasDraw = gameTurn.length === 9 && !winner;
-  const winner = deriveWinner(gameBoard, players);
 
   function handleSqrSelect(rowIndex, colIndex) {
     setGameTurn((prevTurns) => {
